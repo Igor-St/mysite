@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block body_block %}
+    {% load staticfiles %}
+<div class="col-sm-3 col-sm-offset-4 blog-main">
+    <h1>Регистрация</h1>
+
+    <form class="form-registration" role="form" method="post" enctype="multipart/form-data" action=".">
+    {% csrf_token %}
+
+    <label for="id_username">Имя пользователя:</label>
+    <input class="form-control" placeholder="Имя пользователя" id="id_username" maxlength="30" name="username" type="text" required autofocus=""/>
+    <span class="helptext">Обязательное поле. Не более 30 символов. Только буквы, цифры и символы @/./+/-/_.</span>
+    <br />
+    <label for="id_email">E-mail:</label>
+    <input class="form-control" placeholder="E-mail" id="id_email" name="email" type="email" required/>
+    <br />
+    <label for="id_password1">Пароль:</label>
+    <input class="form-control" placeholder="Пароль" id="id_password1" name="password1" type="password" required/>
+    <br />
+    <label for="id_password2">Подтверждение пароля:</label>
+    <input class="form-control" placeholder="Подтверждение пароля" id="id_password2" name="password2" type="password" required/>
+    <span class="helptext">Введите тот же пароль, что и выше, для подтверждения.</span>
+    <br />
+    <br />
+    <label for="id_picture">Изображение профиля:</label>
+    <input placeholder="Изображение профиля" id="id_picture" name="picture" type="file"/>
+    <br />
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" >Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}

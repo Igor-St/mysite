@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+<h1>Регистрация</h1>
+{% if registered %}
+Спасибо за регистрацию
+<a href="/fishlist/">На главную страницу</a><br />
+{% else %}
+Зарегистрируйтесь<br />
+<form id="user_form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <input type="submit" name="submit" value="Register" />
+</form>
+{% endif %}
+{% endblock %}

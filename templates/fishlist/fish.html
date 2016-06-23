@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block body_block %}
+
+
+    <div class="col-sm-12 blog-main">
+
+    <h2 class="block-post-title">{{ fish.fish_name }}<small><p class="block-post-meta">{{ fish.fish_date }}</p></small></h2>
+    {% if user.is_authenticated %}
+      <a class="btn btn-primary" href="{% url 'edit_fish' fish.id %}">Редактировать<span class="glyphicon glyphicon-pencil"></span></a>
+    {% endif %}
+    <br />
+    <br />
+    {% thumbnail fish.fish_image "250x200" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+    {% endthumbnail %}
+    <br />
+    <br />
+    <p>{{ fish.fish_text }}</p>
+    <hr>
+
+<h4>Комментарии:</h4>
+{% for comment in comments %}
+    <p>{{ comment.comment_date }}</p>
+    <p>{{ comment.comment_text }}</p>
+{% endfor %}
+    {% if user.is_authenticated %}
+        <form role="form" method="post" action="{% url 'addcomment' fish.id %}">
+          {% csrf_token %}
+
+        <div class="form-group" >
+            <p class="required"> <label for="comment_text">Комментарий:</label>
+            <input class="form-control"  id="comment_text" name="comment_text" type="text"  placeholder="Введите текст" required/></p>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+        </form>
+
+    {% endif %}
+</div>
+
+{% endblock %}
+

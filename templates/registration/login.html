@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block body_block %}
+{% load staticfiles %}
+    <div class="col-sm-3 col-sm-offset-4 blog-main">
+<h1>Вход в систему</h1>
+
+<form class="form-signin-heading" role="form" method="post" action=".">
+    {% csrf_token %}
+
+
+    <label for="id_username">Имя пользователя:</label>
+    <input class="form-control" placeholder="Имя пользователя" id="id_username" maxlength="30" name="username" type="text" required autofocus=""/>
+    <br>
+    <label for="id_password">Пароль:</label>
+    <input type="password" class="form-control" placeholder="Пароль" id="id_password" name="password"  required />
+    <br />
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" >Вход</button>
+    <br />
+</form>
+
+    <p>Не зарегистрированы? <a href="{% url 'registration_register' %}">Регистрация</a>!</p>
+    </div>
+{% endblock %}

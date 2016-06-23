@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block body_block %}
+{% for fish in fishs %}
+<div class="media">
+
+  <div class="media-left">
+      <br/>
+      {% thumbnail fish.fish_image "250x200" as im %}
+      <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+      {% endthumbnail %}
+
+      <!--img class="media-object" src="/media/{{ fish.fish_image }}"-->
+  </div>
+
+  <div class="media-body">
+
+      <h3><a href="{% url 'fish' fish.id %}">{{ fish.fish_name }}</a><small> {{ fish.fish_date }}</small></h3>
+
+      <div class="fish-text">
+      <p>{{ fish.fish_text|linebreaks|truncatechars:700 }}</p>
+      </div>
+
+  </div>
+<a class="btn btn-primary pull-right" href="{% url 'fish' fish.id %}" role="button">Далее</a>
+  </div>
+<hr>
+
+{% endfor %}
+
+  <div class="row">
+    <div class="col-md-5 col-sm-5 lh-xl">
+        Showing {{ fishs.start_index }} to {{ fishs.end_index }} of {{ fishs.paginator.count }} records.
+    </div>
+
+    <div class="col-md-7 col-sm-7 pull-right">
+  <ul class="pagination">
+            <li class="{{ fishs.has_previous|yesno:',disabled' }}"><a href="?page=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            <li class="{{ fishs.has_previous|yesno:',disabled' }}"><a href="{% if fishs.has_previous %}?page={{ fishs.previous_page_number }}{% else %}#{% endif %}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% for page in fishs.paginator.page_range %}
+                <li class="{% if request.active_page == page %}active{% endif %}"><a href="?page={{ page }}">{{ page }}</a></li>
+            {% endfor %}
+            <li class="{{ fishs.has_next|yesno:',disabled' }}"><a href="{% if fishs.has_next %}?page={{ fishs.next_page_number }}{% else %}#{% endif %}" aria-label="Next"><span aria-hidden="true">&raquo;</span>
+            <li class="{{ fishs.has_next|yesno:',disabled' }}"><a href="?page={{ fishs.paginator.num_pages }}" aria-label="Next"><span aria-hidden="true">&raquo;</span>
+        </ul>
+    </div>
+    </div>
+
+
+
+<div class="pagination">
+<span class="step-links">
+{% if fishs.has_previous %}
+<a href="?page={{ fishs.previous_page_number }}">previous</a>
+{% endif %}
+<span class="current">
+Page {{ fishs.number }} of {{ fishs.paginator.num_pages }}.
+</span>
+{% if fishs.has_next %}
+<a href="?page={{ fishs.next_page_number }}">next</a>
+{% endif %}
+</span>
+</div>
+
+
+    <p>Посещений: {{ visits }}</p>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Мой блог{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href={% static 'css/bootstrap.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/bootstrap-theme.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fishlist.css' %}>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/fishlist/">Мой блог</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'add_fish' %}">Добавить вид</a></li>
+            <li><a href="{% url 'auth_logout' %}?next=/fishlist/">Выйти</a></li>
+            <li><a href="{% url 'auth_password_change' %}?next=/fishlist/">Изменить пароль</a></li>
+            {% else %}
+            <li><a href="{% url 'auth_login' %}">Войти</a></li>
+            <li><a href="{% url 'registration_register' %}">Регистрация</a></li>
+            {% endif %}
+
+              </ul>
+        </div>
+      </div>
+    </div>
+<br />
+<br />
+<br />
+
+<!--
+
+{% if user.is_authenticated %}
+<h1><a href="/fishlist/">Мой блог Вход под именем {{ user.username }}</a></h1>
+{% else %}
+<h1><a href="/fishlist/">Мой блог</a></h1>
+{% endif %}
+<div class="row">
+-->
+{% block body_block %}{% endblock %}
+</div>
+</body>
+</html>
